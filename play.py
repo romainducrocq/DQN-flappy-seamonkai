@@ -2,6 +2,7 @@ from utils import RES
 from view import View
 from pyglet.gl import *
 
+from seamonkey import SeaMonkey
 
 class Play(View):
     def __init__(self, *args, **kwargs):
@@ -18,6 +19,8 @@ class Play(View):
         
         """
 
+        self.seamonkey = SeaMonkey()
+
     def setup(self):
         pass
 
@@ -26,6 +29,6 @@ class Play(View):
 
 
 if __name__ == "__main__":
-    play = Play(RES[0], RES[1], "FlappAI BirDQN - PLAY", None)
+    play = Play(RES[0], RES[1], "flappy seamonkai - PLAY", None)
     pyglet.clock.schedule_interval(play.on_draw, 0.002)
     pyglet.app.run()

@@ -55,7 +55,7 @@ class View(pyglet.window.Window):
 
         self.background_sprite = load_sprite("./imgs/background.png")
         self.foreground_sprite = load_sprite("./imgs/foreground.png")
-        self.monkey_sprite = load_sprite("./imgs/seamonkey.png", anchor_x=2/3)
+        self.seamonkey_sprite = load_sprite("./imgs/seamonkey.png", anchor_x=2/3)
         self.pipe_head_sprite = load_sprite("./imgs/pipe_head.png")
         self.pipe_body_sprite = load_sprite("./imgs/pipe_body.png")
 
@@ -90,8 +90,8 @@ class View(pyglet.window.Window):
 
         self.background_sprite.draw()
 
-        self.monkey_sprite.update(x=-180, y=0, scale_x=1, scale_y=1, rotation=0)
-        self.monkey_sprite.draw()
+        self.seamonkey_sprite.update(x=-180, y=0, scale_x=1, scale_y=1, rotation=0)
+        self.seamonkey_sprite.draw()
 
         x, y, a = 180, 180, 150
 
@@ -114,17 +114,12 @@ class View(pyglet.window.Window):
         x, y, r, n = -180, 0, 40, 40
 
         draw_vertices(
-            [
-                # [(x + math.cos(i/n * math.pi*2) * r, y + math.sin(i/n * math.pi*2) * r) for i in range(n)]
-                [
-                    (x + math.cos(i/n * math.pi*2) * r, y + math.sin(i/n * math.pi*2) * r),
-                    (x + math.cos(((i+1) % n)/n * math.pi*2) * r, y + math.sin(((i+1) % n)/n * math.pi*2) * r)
-                ] for i in range(n)
-            ] + [
+            self.seamonkey.vertices()
+            + [
                 [(x, y), (x+r, y)],
                 [(-360, -640+100), (360, -640+100)]
             ],
-            [255, 0, 0]
+            self.seamonkey.debug_color
         )
 
         """
