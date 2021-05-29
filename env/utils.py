@@ -1,22 +1,11 @@
 import math
 
 RES = (360, 640)
+FLOOR_Y = 100
 
 
 def safe_dict(d, key, def_val):
     return def_val if d is None or key not in d else d[key]
-
-
-def sign(n):
-    return int(n/abs(n))
-
-
-def arg_max(_list):
-    return max(range(len(_list)), key=lambda i: _list[i])
-
-
-def arg_min(_list):
-    return min(range(len(_list)), key=lambda i: _list[i])
 
 
 def clip(min_clip, max_clip, x):
@@ -29,3 +18,10 @@ def euclidean_distance(point1, point2):
 
 def point_on_circle(theta, radius, x_orig, y_orig):
     return x_orig + math.cos(theta)*radius, y_orig + math.sin(theta)*radius
+
+
+def points_to_vertices(points):
+    return [
+        [points[i-1], points[i]]
+        for i in range(len(points))
+    ]

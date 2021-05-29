@@ -7,15 +7,11 @@ class Play(View):
         super(Play, self).__init__(*args, **kwargs)
 
         self.action_keys = {
-            pyglet.window.key.SPACE: self.env.seamonkey.actions['JUMP']
+            pyglet.window.key.UP: self.env.seamonkey.actions['JUMP']
         }
 
     def setup(self):
         _ = self.env.reset()
-        """
-        self.polygons_track = self.env.reset_render()
-        """
-        self.env.reset_render()
 
     def loop(self):
         action = safe_dict(self.action_keys, self.key, self.env.seamonkey.actions['NOOP'])
