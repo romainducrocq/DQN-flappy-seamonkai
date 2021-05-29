@@ -1,34 +1,31 @@
-from utils import RES
-from view import View
+from env import Env, View, safe_dict, RES
 from pyglet.gl import *
 
-from seamonkey import SeaMonkey
 
 class Play(View):
     def __init__(self, *args, **kwargs):
         super(Play, self).__init__(*args, **kwargs)
 
-        """
-        
         self.action_keys = {
-            pyglet.window.key.UP: self.env.car.actions['UP'],
-            pyglet.window.key.RIGHT: self.env.car.actions['RIGHT'],
-            pyglet.window.key.DOWN: self.env.car.actions['DOWN'],
-            pyglet.window.key.LEFT: self.env.car.actions['LEFT']
+            pyglet.window.key.SPACE: self.env.seamonkey.actions['JUMP']
         }
-        
-        """
-
-        self.seamonkey = SeaMonkey()
 
     def setup(self):
-        pass
+        _ = self.env.reset()
+        """
+        self.polygons_track = self.env.reset_render()
+        """
+        self.env.reset_render()
 
     def loop(self):
-        pass
+        action = safe_dict(self.action_keys, self.key, self.env.seamonkey.actions['NOOP'])
+        _, _, done, _ = self.env.step(action)
+        if done:
+            self.setup()
 
 
 if __name__ == "__main__":
-    play = Play(RES[0], RES[1], "flappy seamonkai - PLAY", None)
+
+    play = Play(RES[0], RES[1], "flappy seamonkai - PLAY", Env())
     pyglet.clock.schedule_interval(play.on_draw, 0.002)
     pyglet.app.run()

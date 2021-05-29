@@ -1,4 +1,4 @@
-from utils import \
+from .utils import \
     RES, \
     point_on_circle
 import math

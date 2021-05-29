@@ -1,7 +1,6 @@
-from utils import RES
+from .utils import RES
 from pyglet.gl import *
 import time
-import math
 
 
 def points_to_pyglet_vertex(points, color):
@@ -27,11 +26,10 @@ def draw_polygons(polygons, color):
 def draw_vertices(vertices, color):
     [points_to_pyglet_vertex(vertex, color).draw(gl.GL_LINES) for vertex in vertices]
 
-"""
 
+"""
 def draw_label_top_left(text, x, y, y_offset=0, margin=50, font_size=40, color=(0, 0, 0, 255)):
     pyglet.text.Label(text, x=x+margin, y=y-y_offset*(font_size+margin)-margin, font_size=font_size, color=color).draw()
-
 """
 
 
@@ -53,17 +51,15 @@ class View(pyglet.window.Window):
         self.zoom = 1
         self.key = None
 
-        self.background_sprite = load_sprite("./imgs/background.png")
-        self.foreground_sprite = load_sprite("./imgs/foreground.png")
-        self.seamonkey_sprite = load_sprite("./imgs/seamonkey.png", anchor_x=2/3)
-        self.pipe_head_sprite = load_sprite("./imgs/pipe_head.png")
-        self.pipe_body_sprite = load_sprite("./imgs/pipe_body.png")
-
-
-        """
-        
         self.env = env
 
+        self.background_sprite = load_sprite("./env/img/background.png")
+        self.foreground_sprite = load_sprite("./env/img/foreground.png")
+        self.seamonkey_sprite = load_sprite("./env/img/seamonkey.png", anchor_x=2/3)
+        self.pipe_head_sprite = load_sprite("./env/img/pipe_head.png")
+        self.pipe_body_sprite = load_sprite("./env/img/pipe_body.png")
+
+        """
         self.polygons_track = []
         self.car_imgs, self.car_sprites = [], []
         for i, sprite in enumerate(self.env.car.sprites):
@@ -78,7 +74,6 @@ class View(pyglet.window.Window):
 
         self.ai_view = False
         self.ai_view_timer = time.time()
-        
         """
 
         self.setup()
@@ -95,18 +90,18 @@ class View(pyglet.window.Window):
 
         x, y, a = 180, 180, 150
 
-        for i in range(-720, y-a):
+        for i in range(-720, y - a):
             self.pipe_body_sprite.update(x=x, y=i, scale_x=1, scale_y=1, rotation=0)
             self.pipe_body_sprite.draw()
 
-        self.pipe_head_sprite.update(x=x, y=(y-a), scale_x=1, scale_y=1, rotation=0)
+        self.pipe_head_sprite.update(x=x, y=(y - a), scale_x=1, scale_y=1, rotation=0)
         self.pipe_head_sprite.draw()
 
-        for i in range(y+a, 720):
+        for i in range(y + a, 720):
             self.pipe_body_sprite.update(x=x, y=i, scale_x=1, scale_y=1, rotation=180)
             self.pipe_body_sprite.draw()
 
-        self.pipe_head_sprite.update(x=x, y=(y+a), scale_x=1, scale_y=1, rotation=180)
+        self.pipe_head_sprite.update(x=x, y=(y + a), scale_x=1, scale_y=1, rotation=180)
         self.pipe_head_sprite.draw()
 
         self.foreground_sprite.draw()
@@ -114,28 +109,15 @@ class View(pyglet.window.Window):
         x, y, r, n = -180, 0, 40, 40
 
         draw_vertices(
-            self.seamonkey.vertices()
+            self.env.seamonkey.vertices()
             + [
-                [(x, y), (x+r, y)],
-                [(-360, -640+100), (360, -640+100)]
+                [(x, y), (x + r, y)],
+                [(-360, -640 + 100), (360, -640 + 100)]
             ],
-            self.seamonkey.debug_color
+            self.env.seamonkey.debug_color
         )
 
         """
-        draw_vertices(
-            [
-                [[r / 2, r / 2], [r / 2, -r / 2]],
-                [[r / 2, -r / 2], [-r / 2, -r / 2]],
-                [[-r / 2, -r / 2], [-r / 2, r / 2]],
-                [[-r / 2, r / 2], [r / 2, r / 2]]
-            ],
-            [0, 0, 0]
-        )
-        """
-
-        """
-        
         draw_polygons(self.polygons_track, self.env.track.colors["polygons_track"])
         if self.key == pyglet.window.key.SPACE and (time.time() - self.ai_view_timer) > 0.2:
             self.ai_view = not self.ai_view
@@ -160,7 +142,6 @@ class View(pyglet.window.Window):
         draw_label_top_left("AI view: SPACE", -RES[0], RES[1], y_offset=1)
         draw_label_top_left("Time: " + str(round(self.env.car.get_time(), 2)), -RES[0], RES[1], y_offset=2)
         draw_label_top_left("Score: " + str(self.env.car.score), -RES[0], RES[1], y_offset=3)
-        
         """
 
     def on_resize(self, width, height):
