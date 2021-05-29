@@ -39,7 +39,7 @@ class SeaMonkey:
 
         self.max_sonar_distances = [
             safe_dict(max_features, "sonar_distance_x", 1.),
-            safe_dict(max_features, "sonar_distance_y", 1.),
+            safe_dict(max_features, "sonar_distance_y", 1.)
         ]
 
         self.theta = 0
