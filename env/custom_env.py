@@ -41,7 +41,6 @@ class CustomEnv(gym.Env):
                 self.seamonkey.rel_h / 1.
             ], dtype=np.float32)
 
-        print(obs)
         return obs
 
     def _rew(self):
@@ -54,7 +53,7 @@ class CustomEnv(gym.Env):
 
     def _done(self):
         done = self.seamonkey.is_collision(self.pipes.get_next_pipe.points())
-        return False # done
+        return done
 
     def _info(self):
         info = {
