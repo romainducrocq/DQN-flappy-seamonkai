@@ -2,6 +2,7 @@ from .utils import \
     RES, \
     FLOOR_Y
 from pyglet.gl import *
+import math
 import time
 
 
@@ -53,36 +54,17 @@ class View(pyglet.window.Window):
 
         self.env = env
 
-        self.ai_view = True
+        self.ai_view = False
         self.ai_view_timer = time.time()
 
-        self.debug = True
+        self.debug = False
         self.debug_colors = ([255, 0, 0], [0, 0, 255])
 
-        """
         self.background_sprite = load_sprite("./env/img/background.png")
         self.foreground_sprite = load_sprite("./env/img/foreground.png")
         self.seamonkey_sprite = load_sprite("./env/img/seamonkey.png", anchor_x=2/3)
         self.pipe_head_sprite = load_sprite("./env/img/pipe_head.png")
-        self.pipe_body_sprite = load_sprite("./env/img/pipe_body.png")
-        """
-
-        """
-        self.polygons_track = []
-        self.car_imgs, self.car_sprites = [], []
-        for i, sprite in enumerate(self.env.car.sprites):
-            self.car_imgs.append(pyglet.image.load(sprite))
-            self.car_imgs[i].anchor_x = self.car_imgs[i].width // 2
-            self.car_imgs[i].anchor_y = self.car_imgs[i].height // 2
-            self.car_sprites.append({
-                "sprite": pyglet.sprite.Sprite(self.car_imgs[i], 0, 0),
-                "scale_x": (self.env.car.height + 5) / (self.car_imgs[i].height * 2),
-                "scale_y": 2 * (self.env.car.width + 5) / self.car_imgs[i].width
-            })
-
-        self.ai_view = False
-        self.ai_view_timer = time.time()
-        """
+        self.pipe_body_sprite = load_sprite("./env/img/pipe_body_full.png")
 
         self.setup()
 
@@ -90,6 +72,26 @@ class View(pyglet.window.Window):
         self.clear()
 
         self.loop()
+
+        self.background_sprite.draw()
+
+        self.seamonkey_sprite.update(x=self.env.seamonkey.x, y=self.env.seamonkey.y, scale_x=1, scale_y=1, rotation=math.degrees(self.env.seamonkey.theta))
+        self.seamonkey_sprite.draw()
+
+        for pipe in self.env.pipes.pipes:
+            self.pipe_body_sprite.update(x=pipe.x, y=pipe.y - ((pipe.gap // 2) + 2 * RES[0]), scale_x=1, scale_y=1, rotation=0)
+            self.pipe_body_sprite.draw()
+
+            self.pipe_head_sprite.update(x=pipe.x, y=pipe.y - ((pipe.gap + pipe.h_head) // 2), scale_x=1, scale_y=1, rotation=0)
+            self.pipe_head_sprite.draw()
+
+            self.pipe_body_sprite.update(x=pipe.x, y=pipe.y + ((pipe.gap // 2) + 2 * RES[0]), scale_x=1, scale_y=1, rotation=180)
+            self.pipe_body_sprite.draw()
+
+            self.pipe_head_sprite.update(x=pipe.x, y=pipe.y + ((pipe.gap + pipe.h_head) // 2), scale_x=1, scale_y=1, rotation=180)
+            self.pipe_head_sprite.draw()
+
+        self.foreground_sprite.draw()
 
         if self.key == pyglet.window.key.SPACE and (time.time() - self.ai_view_timer) > 0.2:
             self.ai_view = not self.ai_view
@@ -126,69 +128,6 @@ class View(pyglet.window.Window):
 
         draw_label_top_left("Time: " + str(round(self.env.seamonkey.get_time(), 2)), -RES[0], RES[1], y_offset=1)
         draw_label_top_left("Score: " + str(self.env.seamonkey.score), -RES[0], RES[1], y_offset=2)
-
-        """
-        self.background_sprite.draw()
-
-        self.seamonkey_sprite.update(x=-180, y=0, scale_x=1, scale_y=1, rotation=0)
-        self.seamonkey_sprite.draw()
-
-        x, y, a = 180, 180, 150
-
-        for i in range(-720, y - a):
-            self.pipe_body_sprite.update(x=x, y=i, scale_x=1, scale_y=1, rotation=0)
-            self.pipe_body_sprite.draw()
-
-        self.pipe_head_sprite.update(x=x, y=(y - a), scale_x=1, scale_y=1, rotation=0)
-        self.pipe_head_sprite.draw()
-
-        for i in range(y + a, 720):
-            self.pipe_body_sprite.update(x=x, y=i, scale_x=1, scale_y=1, rotation=180)
-            self.pipe_body_sprite.draw()
-
-        self.pipe_head_sprite.update(x=x, y=(y + a), scale_x=1, scale_y=1, rotation=180)
-        self.pipe_head_sprite.draw()
-
-        self.foreground_sprite.draw()
-
-        x, y, r, n = -180, 0, 40, 40
-
-        draw_vertices(
-            self.env.seamonkey.vertices()
-            + [
-                [(x, y), (x + r, y)],
-                [(-360, -640 + 100), (360, -640 + 100)]
-            ],
-            self.env.seamonkey.debug_color
-        )
-        """
-
-        """
-        draw_polygons(self.polygons_track, self.env.track.colors["polygons_track"])
-        if self.key == pyglet.window.key.SPACE and (time.time() - self.ai_view_timer) > 0.2:
-            self.ai_view = not self.ai_view
-            self.ai_view_timer = time.time()
-        if self.ai_view:
-            draw_vertices(self.env.track.reward_gates, self.env.track.colors["vertex_reward_gates"])
-            draw_vertices([self.env.track.next_reward_gate(self.env.car.next_reward_gate_i)], self.env.track.colors["vertex_next_reward_gate"])
-            draw_vertices(self.env.car.sonars, self.env.car.color[int(self.env.car.is_collision)])
-        draw_vertices(self.env.track.out_border_vertices, self.env.track.colors["vertex_borders"])
-        draw_vertices(self.env.track.in_border_vertices, self.env.track.colors["vertex_borders"])
-        # draw_polygons([self.env.car.points()], self.env.car.color[int(self.env.car.is_collision)])
-
-        self.car_sprites[int(self.env.car.is_collision)]["sprite"].update(
-            x=self.env.car.x_pos,
-            y=self.env.car.y_pos,
-            scale_x=self.car_sprites[int(self.env.car.is_collision)]["scale_x"],
-            scale_y=self.car_sprites[int(self.env.car.is_collision)]["scale_y"],
-            rotation=270-self.env.car.theta
-        )
-        self.car_sprites[int(self.env.car.is_collision)]["sprite"].draw()
-
-        draw_label_top_left("AI view: SPACE", -RES[0], RES[1], y_offset=1)
-        draw_label_top_left("Time: " + str(round(self.env.car.get_time(), 2)), -RES[0], RES[1], y_offset=2)
-        draw_label_top_left("Score: " + str(self.env.car.score), -RES[0], RES[1], y_offset=3)
-        """
 
     def on_resize(self, width, height):
         glMatrixMode(gl.GL_MODELVIEW)

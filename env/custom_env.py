@@ -54,7 +54,7 @@ class CustomEnv(gym.Env):
 
     def _done(self):
         done = self.seamonkey.is_collision(self.pipes.get_next_pipe.points())
-        return done
+        return False # done
 
     def _info(self):
         info = {

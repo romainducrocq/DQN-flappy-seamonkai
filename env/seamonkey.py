@@ -89,7 +89,7 @@ class SeaMonkey:
         self.rel_h = int(self.y >= y)
 
     def rotate_theta(self):
-        self.theta = np.interp(self.y - self.y_prev, [-self.jump, self.jump], [-math.pi/4, math.pi/4])
+        self.theta = - np.interp(self.y - self.y_prev, [-self.jump, self.jump], [-math.pi/4, math.pi/4])
         self.y_prev = self.y
 
     def vertex_theta(self):
