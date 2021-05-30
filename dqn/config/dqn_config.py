@@ -9,7 +9,7 @@ HYPER_PARAMS = {
     'gamma': 0.99,                       # Discount factor
     'eps_start': 1.,                     # Epsilon start
     'eps_min': 0.01,                     # Epsilon min
-    'eps_dec': 1e7,                      # Epsilon decay
+    'eps_dec': 1e6,                      # Epsilon decay
     'eps_dec_exp': True,                 # Epsilon exponential decay
     'bs': 32,                            # Batch size
     'min_mem': 1000000,                  # Replay memory buffer min size
