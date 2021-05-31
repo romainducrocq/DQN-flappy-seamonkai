@@ -63,6 +63,9 @@ class CustomEnv(gym.Env):
         return info
 
     def reset(self):
+        self.steps = 0
+        self.total_reward = 0.
+
         self.seamonkey = SeaMonkey(self.MAX_FEATURES)
         self.pipes = Pipes()
 
