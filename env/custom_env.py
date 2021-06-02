@@ -44,10 +44,11 @@ class CustomEnv(gym.Env):
         return obs
 
     def _rew(self):
-        rew = 0.
+        rew = pow(1 - (self.seamonkey.sonar_distances[1] / self.MAX_FEATURES["sonar_distance_y"]), 2) / 10
+
         if self.pipes.passed_pipe(self.seamonkey.back_x()):
             self.seamonkey.reward()
-            rew += 1
+            rew = 1
         self.total_reward += rew
         return rew
 

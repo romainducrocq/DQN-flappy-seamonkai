@@ -5,8 +5,8 @@ import torch.optim as optim
 HYPER_PARAMS = {
     'gpu': '0',                          # GPU #
     'n_env': 4,                          # Multi-processing environments
-    'lr': 5e-05,                         # Learning rate
-    'gamma': 0.99,                       # Discount factor
+    'lr': 0.001,                         # Learning rate
+    'gamma': 0.9,                        # Discount factor
     'eps_start': 1.,                     # Epsilon start
     'eps_min': 0.01,                     # Epsilon min
     'eps_dec': 1e6,                      # Epsilon decay
@@ -22,7 +22,7 @@ HYPER_PARAMS = {
     'save_dir': './save/',               # Save directory
     'log_dir': './logs/',                # Log directory
     'load': True,                        # Load model
-    'repeat': 8,                         # Repeat action
+    'repeat': 5,                         # Repeat action
     'max_episode_steps': 10000,          # Time limit episode steps
     'max_total_steps': 0,                # Max total training steps if > 0, else inf training
     'algo': 'PerDuelingDoubleDQNAgent'   # DQNAgent

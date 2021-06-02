@@ -10,6 +10,8 @@ from functools import reduce
 
 from torch import device, cuda
 
+import time
+
 
 class Observe(View):
     def __init__(self, width, height, name, env, args):
@@ -43,6 +45,8 @@ class Observe(View):
         self.obs, _, done, _ = self.env.step(action)
         if done:
             self.setup()
+
+        time.sleep(0.028)
 
 
 if __name__ == "__main__":
