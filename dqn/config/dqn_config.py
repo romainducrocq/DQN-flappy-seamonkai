@@ -9,7 +9,7 @@ HYPER_PARAMS = {
     'gamma': 0.9,                        # Discount factor
     'eps_start': 1.,                     # Epsilon start
     'eps_min': 0.01,                     # Epsilon min
-    'eps_dec': 1e6,                      # Epsilon decay
+    'eps_dec': 2e6,                      # Epsilon decay
     'eps_dec_exp': True,                 # Epsilon exponential decay
     'bs': 32,                            # Batch size
     'min_mem': 1000000,                  # Replay memory buffer min size
@@ -23,7 +23,7 @@ HYPER_PARAMS = {
     'log_dir': './logs/',                # Log directory
     'load': True,                        # Load model
     'repeat': 5,                         # Repeat action
-    'max_episode_steps': 10000,          # Time limit episode steps
+    'max_episode_steps': 5000,           # Time limit episode steps
     'max_total_steps': 0,                # Max total training steps if > 0, else inf training
     'algo': 'PerDuelingDoubleDQNAgent'   # DQNAgent
                                          # DoubleDQNAgent
