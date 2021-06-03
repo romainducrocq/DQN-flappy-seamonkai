@@ -1,7 +1,9 @@
 #################################
 # """CHANGE IF NOT PYGLET VIEW"""
 
+# """IMPORT CUSTOM ENV HERE"""
 from .custom_env import RES, FLOOR_Y
+######
 
 from pyglet.gl import *
 
