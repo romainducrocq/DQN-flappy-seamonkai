@@ -1,3 +1,6 @@
+#################################
+# """FIT TO VIEW IF NOT PYGLET"""
+
 from .utils import \
     RES, \
     FLOOR_Y
@@ -43,17 +46,20 @@ def load_sprite(path, anchor_x=0.5, anchor_y=0.5):
 
 class View(pyglet.window.Window):
 
-    def __init__(self, width, height, name, env):
+    def __init__(self, name, env):
+        # """CHANGE VIEW INIT HERE"""
+        (width, height) = RES
+        background_color = [255, 255, 255]
+        ######
+
         super(View, self).__init__(width, height, name, resizable=True)
-        glClearColor(1, 1, 1, 1)
-        self.width = width
-        self.height = height
-        self.name = name
+        glClearColor(background_color[0] / 255, background_color[1] / 255, background_color[2] / 255, 1)
         self.zoom = 1
         self.key = None
 
         self.env = env
 
+        # """CHANGE VIEW SETUP HERE"""
         self.ai_view = False
         self.ai_view_timer = time.time()
 
@@ -65,6 +71,7 @@ class View(pyglet.window.Window):
         self.seamonkey_sprite = load_sprite("./env/img/seamonkey.png", anchor_x=2/3)
         self.pipe_head_sprite = load_sprite("./env/img/pipe_head.png")
         self.pipe_body_sprite = load_sprite("./env/img/pipe_body_full.png")
+        ######
 
         self.setup()
 
@@ -73,6 +80,7 @@ class View(pyglet.window.Window):
 
         self.loop()
 
+        # """CHANGE VIEW LOOP HERE"""
         self.background_sprite.draw()
 
         self.seamonkey_sprite.update(x=self.env.seamonkey.x, y=self.env.seamonkey.y, scale_x=1, scale_y=1, rotation=math.degrees(self.env.seamonkey.theta))
@@ -128,6 +136,7 @@ class View(pyglet.window.Window):
 
         draw_label_top_left("Time: " + str(round(self.env.seamonkey.get_time(), 2)), -RES[0], RES[1], y_offset=1)
         draw_label_top_left("Score: " + str(self.env.seamonkey.score), -RES[0], RES[1], y_offset=2)
+        ######
 
     def on_resize(self, width, height):
         glMatrixMode(gl.GL_MODELVIEW)
@@ -148,3 +157,5 @@ class View(pyglet.window.Window):
 
     def loop(self):
         raise NotImplementedError
+
+#################################

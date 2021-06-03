@@ -1,7 +1,8 @@
-from env import Env, View, RES
+from env import Env, View
+from pyglet.gl import *  # """FIT TO VIEW IF NOT PYGLET"""
+
 from dqn.config import HYPER_PARAMS
 from dqn import make_env, Networks
-from pyglet.gl import *
 
 import os
 import argparse
@@ -14,11 +15,11 @@ import time
 
 
 class Observe(View):
-    def __init__(self, width, height, name, env, args):
+    def __init__(self, name, env, args):
         os.environ['CUDA_DEVICE_ORDER'] = 'PCI_BUS_ID'
         os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
 
-        super(Observe, self).__init__(width, height, name, make_env(env=env, repeat=HYPER_PARAMS['repeat'], max_episode_steps=args.max_steps))
+        super(Observe, self).__init__(name, make_env(env=env, repeat=HYPER_PARAMS['repeat'], max_episode_steps=args.max_steps))
 
         self.network = getattr(Networks, {
             "DQNAgent": "DeepQNetwork",
@@ -46,15 +47,19 @@ class Observe(View):
         if done:
             self.setup()
 
+        # """FIT TO FRAME SKIP"""
         time.sleep(0.028)
+        ######
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Initial DQN - OBSERVE")
+    parser = argparse.ArgumentParser(description="OBSERVE")
     parser.add_argument('-dir', type=str, default='', help='Directory', required=True)
     parser.add_argument('-max_steps', type=int, default=HYPER_PARAMS['max_episode_steps'], help='Max episode steps')
     parser.add_argument('-gpu', type=str, default='0', help='GPU #')
 
-    play = Observe(RES[0], RES[1], "flappy seamonkai - OBSERVE", Env(), parser.parse_args())
+    # """FIT TO VIEW IF NOT PYGLET"""
+    play = Observe("OBSERVE", Env(), parser.parse_args())
     pyglet.clock.schedule_interval(play.on_draw, 0.002)
     pyglet.app.run()
+    ######

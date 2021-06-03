@@ -1,3 +1,5 @@
+Implemented from my DQN library: https://github.com/romainducrocq/initial-DQN
+
 ### flappy-seamonkai
 
 The boosted seamonkai flappying around.  
@@ -21,4 +23,7 @@ The boosted seamonkai flappying around.
 
 ### Demo
 
-![Demo gif](demo.gif)
+![Demo gif](demo/demo.gif)
+
+![Demo tensorboard png](demo/demo_tensorboard.png)
+
