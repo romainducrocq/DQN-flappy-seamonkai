@@ -4,9 +4,6 @@ import math
 RES = (360, 640)
 ######
 
-#########################
-# """CHANGE UTILS HERE"""
-
 FLOOR_Y = 100
 
 
@@ -31,5 +28,3 @@ def points_to_vertices(points):
         [points[i-1], points[i]]
         for i in range(len(points))
     ]
-
-#########################
