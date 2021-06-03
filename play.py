@@ -10,6 +10,7 @@ class Play(View):
         super(Play, self).__init__(*args, **kwargs)
 
         # """FIT TO ACTIONS"""
+        self.noop = self.env.seamonkey.actions['NOOP']
         self.action_keys = {
             pyglet.window.key.UP: self.env.seamonkey.actions['JUMP']
         }
@@ -20,7 +21,7 @@ class Play(View):
 
     def loop(self):
         # """FIT TO ACTIONS"""
-        action = self.env.seamonkey.actions['NOOP'] if self.key not in self.action_keys else self.action_keys[self.key]
+        action = self.noop if self.key not in self.action_keys else self.action_keys[self.key]
         ######
 
         _, _, done, _ = self.env.step(action)
