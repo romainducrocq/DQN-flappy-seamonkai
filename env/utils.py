@@ -1,6 +1,6 @@
 import math
 
-# """CHANGE VIEW RESOLUTION HERE"""
+# """CHANGE SCREEN RESOLUTION HERE"""
 RES = (360, 640)
 ######
 
