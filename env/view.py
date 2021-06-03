@@ -1,5 +1,5 @@
 #################################
-# """FIT TO VIEW IF NOT PYGLET"""
+# """CHANGE IF NOT PYGLET VIEW"""
 
 from .utils import \
     RES, \

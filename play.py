@@ -1,5 +1,8 @@
 from env import Env, View
-from pyglet.gl import *  # """FIT TO VIEW IF NOT PYGLET"""
+
+# """CHANGE IF NOT PYGLET VIEW"""
+from pyglet.gl import *
+######
 
 
 class Play(View):
@@ -27,7 +30,7 @@ class Play(View):
 
 if __name__ == "__main__":
 
-    # """FIT TO VIEW IF NOT PYGLET"""
+    # """CHANGE IF NOT PYGLET VIEW"""
     play = Play("PLAY", Env())
     pyglet.clock.schedule_interval(play.on_draw, 0.002)
     pyglet.app.run()
