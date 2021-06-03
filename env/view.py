@@ -152,10 +152,10 @@ class View(pyglet.window.Window):
         if self.key == symbol:
             self.key = None
 
+    #################################
+
     def setup(self):
         raise NotImplementedError
 
     def loop(self):
         raise NotImplementedError
-
-#################################
