@@ -1,16 +1,10 @@
-RES = (360, 640) => 720, 1280  
-
-monkey: r = 40px  
-monkey sprite: anchor x: 2/3 (tail: 40px, head: 80px)  
-
-pipe head: x = 120px, y = 90px  
-pipe gap: 160-200px  
-
-sand floor: y = 100px  
-
 ### flappy-seamonkai
 
 The boosted seamonkai flappying around.  
+
+1. Train: `python3 train.py -algo PerDuelingDoubleDQNAgent -max_total_steps 9000000`.
+2. Observe: `python3 observe.py -dir ./save/PerDuelingDoubleDQNAgent_lr0.001_model.pack -max_steps 0`.
+3. Play: `python3 play.py`.
 
 ### Software Requirements
 
@@ -24,3 +18,7 @@ The boosted seamonkai flappying around.
 
 - pyglet, gym, torch, tensorboard, msgpack, wheel  
 > (venv) pip3 install 'pyglet==1.5.0' gym torch tensorboard 'msgpack==1.0.2' wheel --no-cache-dir  
+
+### Demo
+
+![Demo gif](demo.gif)
