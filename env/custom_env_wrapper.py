@@ -1,8 +1,5 @@
-# """IMPORT ENV HERE"""
-from .seamonkey import SeaMonkey
-from .pipe import Pipes
-from .utils import \
-    RES
+# """IMPORT CUSTOM ENV HERE"""
+from .custom_env import Pipes, SeaMonkey, RES
 ######
 
 import gym
@@ -10,11 +7,11 @@ from gym import spaces
 import numpy as np
 
 
-class CustomEnv(gym.Env):
+class CustomEnvWrapper(gym.Env):
     metadata = {'render.modes': ['human']}
 
     def __init__(self, train=False):
-        super(CustomEnv, self).__init__()
+        super(CustomEnvWrapper, self).__init__()
 
         self.train = train
 

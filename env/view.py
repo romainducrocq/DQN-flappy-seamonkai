@@ -1,10 +1,10 @@
 #################################
 # """CHANGE IF NOT PYGLET VIEW"""
 
-from .utils import \
-    RES, \
-    FLOOR_Y
+from .custom_env import RES, FLOOR_Y
+
 from pyglet.gl import *
+
 import math
 import time
 
@@ -66,11 +66,12 @@ class View(pyglet.window.Window):
         self.debug = False
         self.debug_colors = ([255, 0, 0], [0, 0, 255])
 
-        self.background_sprite = load_sprite("./env/img/background.png")
-        self.foreground_sprite = load_sprite("./env/img/foreground.png")
-        self.seamonkey_sprite = load_sprite("./env/img/seamonkey.png", anchor_x=2/3)
-        self.pipe_head_sprite = load_sprite("./env/img/pipe_head.png")
-        self.pipe_body_sprite = load_sprite("./env/img/pipe_body_full.png")
+        img_path = "./env/custom_env/img/"
+        self.background_sprite = load_sprite(img_path + "background.png")
+        self.foreground_sprite = load_sprite(img_path + "foreground.png")
+        self.seamonkey_sprite = load_sprite(img_path + "seamonkey.png", anchor_x=2/3)
+        self.pipe_head_sprite = load_sprite(img_path + "pipe_head.png")
+        self.pipe_body_sprite = load_sprite(img_path + "pipe_body_full.png")
         ######
 
         self.setup()
