@@ -146,7 +146,6 @@ class PygletView(pyglet.window.Window if PYGLET else object):
         PygletView.draw_label_top_left("Score: " + str(self.env.seamonkey.score), -RES[0], RES[1], y_offset=2)
         ################################################################################################################
 
-    @property
     def get_play_action(self):
         # """CHANGE PLAY ACTIONS HERE""" ###############################################################################
         noop = self.env.seamonkey.actions['NOOP']
@@ -220,7 +219,6 @@ class CustomView:
         # """CHANGE VIEW LOOP HERE""" ##################################################################################
         ################################################################################################################
 
-    @property
     def get_play_action(self):
         # """CHANGE PLAY ACTIONS HERE""" ###############################################################################
         return 0

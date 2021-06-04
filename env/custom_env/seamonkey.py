@@ -12,7 +12,7 @@ import numpy as np
 
 
 class SeaMonkey:
-    def __init__(self, max_features=None):
+    def __init__(self, lim_features=None):
         self.x = -RES[0] / 2
         self.y = 0
         self.r = 40
@@ -38,8 +38,8 @@ class SeaMonkey:
         self.rel_h = 0
 
         self.max_sonar_distances = [
-            safe_dict(max_features, "sonar_distance_x", 1.),
-            safe_dict(max_features, "sonar_distance_y", 1.)
+            safe_dict(lim_features, "sonar_distance_x", (1., 1.))[1],
+            safe_dict(lim_features, "sonar_distance_y", (1., 1.))[1]
         ]
 
         self.theta = 0
