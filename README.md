@@ -1,4 +1,4 @@
-Implemented from my DQN library: https://github.com/romainducrocq/initial-DQN
+Implemented from my DQN framework: https://github.com/romainducrocq/initial-DQN
 
 ****
 
