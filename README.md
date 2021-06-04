@@ -1,5 +1,7 @@
 Implemented from my DQN library: https://github.com/romainducrocq/initial-DQN
 
+****
+
 ### flappy-seamonkai
 
 The boosted seamonkai flappying around.  
@@ -7,6 +9,8 @@ The boosted seamonkai flappying around.
 1. Train: `python3 train.py -algo PerDuelingDoubleDQNAgent -max_total_steps 9000000`.
 2. Observe: `python3 observe.py -dir ./save/PerDuelingDoubleDQNAgent_lr0.001_model.pack -max_steps 0`.
 3. Play: `python3 play.py`.
+
+****
 
 ### Software Requirements
 
@@ -20,6 +24,8 @@ The boosted seamonkai flappying around.
 
 - pyglet, gym, torch, tensorboard, msgpack, wheel  
 > (venv) pip3 install 'pyglet==1.5.0' gym torch tensorboard 'msgpack==1.0.2' wheel --no-cache-dir  
+
+****
 
 ### Demo
 
