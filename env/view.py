@@ -83,6 +83,22 @@ class PygletView(pyglet.window.Window if PYGLET else object):
         self.pipe_body_sprite = PygletView.load_sprite(img_path + "pipe_body_full.png")
         ################################################################################################################
 
+    @staticmethod
+    def await_frame_skip():
+        # """CHANGE AWAIT FRAME SKIP HERE""" ###########################################################################
+        time.sleep(0.028)
+        ################################################################################################################
+
+    def select_play_action(self):
+        # """CHANGE SELECT PLAY ACTIONS HERE""" ########################################################################
+        noop = self.env.seamonkey.actions['NOOP']
+        action_keys = {
+            pyglet.window.key.UP: self.env.seamonkey.actions['JUMP']
+        }
+
+        return noop if self.key not in action_keys else action_keys[self.key]
+        ################################################################################################################
+
     def on_draw(self, dt=0.002):
         self.clear()
 
@@ -146,22 +162,6 @@ class PygletView(pyglet.window.Window if PYGLET else object):
         PygletView.draw_label_top_left("Score: " + str(self.env.seamonkey.score), -RES[0], RES[1], y_offset=2)
         ################################################################################################################
 
-    def get_play_action(self):
-        # """CHANGE PLAY ACTIONS HERE""" ###############################################################################
-        noop = self.env.seamonkey.actions['NOOP']
-        action_keys = {
-            pyglet.window.key.UP: self.env.seamonkey.actions['JUMP']
-        }
-
-        return noop if self.key not in action_keys else action_keys[self.key]
-        ################################################################################################################
-
-    @staticmethod
-    def wait_frame_skip():
-        # """CHANGE WAIT TIME FRAME SKIP HERE""" #######################################################################
-        time.sleep(0.028)
-        ################################################################################################################
-
     def on_resize(self, width, height):
         glMatrixMode(gl.GL_MODELVIEW)
         glLoadIdentity()
@@ -205,9 +205,15 @@ class CustomView:
         # """CHANGE VIEW SETUP HERE""" #################################################################################
         ################################################################################################################
 
-    def clear(self):
-        # """CHANGE CLEAR VIEW HERE""" #################################################################################
-        pass
+    @staticmethod
+    def await_frame_skip():
+        # """CHANGE AWAIT FRAME SKIP HERE""" ###########################################################################
+        time.sleep(0.)
+        ################################################################################################################
+
+    def select_play_action(self):
+        # """CHANGE SELECT PLAY ACTIONS HERE""" ########################################################################
+        return 0
         ################################################################################################################
 
     def on_draw(self, dt=0.002):
@@ -219,15 +225,9 @@ class CustomView:
         # """CHANGE VIEW LOOP HERE""" ##################################################################################
         ################################################################################################################
 
-    def get_play_action(self):
-        # """CHANGE PLAY ACTIONS HERE""" ###############################################################################
-        return 0
-        ################################################################################################################
-
-    @staticmethod
-    def wait_frame_skip():
-        # """CHANGE WAIT TIME FRAME SKIP HERE""" #######################################################################
-        time.sleep(0.)
+    def clear(self):
+        # """CHANGE CLEAR VIEW HERE""" #################################################################################
+        pass
         ################################################################################################################
 
     def setup(self):
