@@ -90,8 +90,10 @@ class CustomEnvWrapper(gym.Env):
     def _info(self):
         info = {
             "l": self.steps,
-            "r": self.total_reward
+            "r": self.total_reward,
             # """CHANGE INFO HERE""" ###################################################################################
+            "time": round(self.seamonkey.get_time(), 2),
+            "score": self.seamonkey.score,
             ############################################################################################################
         }
         return info
