@@ -1,4 +1,4 @@
-Implemented from my DQN framework: https://github.com/romainducrocq/initial-DQN
+Implemented from my DQN framework: https://github.com/romainducrocq/frameworQ
 
 ****
 
@@ -7,8 +7,9 @@ Implemented from my DQN framework: https://github.com/romainducrocq/initial-DQN
 The boosted seamonkai flappying around.  
 
 1. Train: `python3 train.py -algo PerDuelingDoubleDQNAgent -max_total_steps 9000000`.
-2. Observe: `python3 observe.py -dir ./save/PerDuelingDoubleDQNAgent_lr0.001_model.pack -max_steps 0`.
-3. Play: `python3 play.py`.
+2. Observe: `python3 observe.py -d ./save/PerDuelingDoubleDQNAgent_lr0.001_model.pack -max_steps 0`.
+3. Visualize: `tensorboard --logdir ./logs/`.
+4. Play: `python3 play.py`.
 
 ****
 
