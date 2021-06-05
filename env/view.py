@@ -86,18 +86,24 @@ class PygletView(pyglet.window.Window if PYGLET else object):
     @staticmethod
     def await_frame_skip():
         # """CHANGE AWAIT FRAME SKIP HERE""" ###########################################################################
-        time.sleep(0.028)
+        dt = 0.028
         ################################################################################################################
 
+        time.sleep(dt)
+
     def get_play_action(self):
+        play_action = 0
+
         # """CHANGE GET PLAY ACTION HERE""" ############################################################################
         noop = self.env.seamonkey.actions['NOOP']
         action_keys = {
             pyglet.window.key.UP: self.env.seamonkey.actions['JUMP']
         }
 
-        return noop if self.key not in action_keys else action_keys[self.key]
+        play_action += noop if self.key not in action_keys else action_keys[self.key]
         ################################################################################################################
+
+        return play_action
 
     def on_draw(self, dt=0.002):
         self.clear()
@@ -208,13 +214,18 @@ class CustomView:
     @staticmethod
     def await_frame_skip():
         # """CHANGE AWAIT FRAME SKIP HERE""" ###########################################################################
-        time.sleep(0.)
+        dt = 0.
         ################################################################################################################
 
+        time.sleep(dt)
+
     def get_play_action(self):
+        play_action = 0
+
         # """CHANGE GET PLAY ACTION HERE""" ############################################################################
-        return 0
         ################################################################################################################
+
+        return play_action
 
     def on_draw(self, dt=0.002):
         time.sleep(dt)
