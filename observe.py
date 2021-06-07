@@ -37,11 +37,17 @@ class Observe(View):
 
         self.repeat = 0
         self.action = 0
+        self.ep = 0
+
+        print()
+        print("OBSERVE")
+        print()
+        [print(arg, "=", getattr(args, arg)) for arg in vars(args)]
+
+        self.max_episodes = args.max_episodes
 
     def setup(self):
         self.obs = self.env.reset()
-
-        self.repeat = 0
 
     def loop(self):
         if self.repeat % (HYPER_PARAMS['repeat'] or 1) == 0:
@@ -53,14 +59,20 @@ class Observe(View):
         if done:
             self.setup()
 
-            print()
-            [print(k, ":", info[k]) for k in info]
+            self.repeat = 0
+            self.ep += 1
+
+            Env.ep_info_log_csv(info, ep=self.ep, log_dir=self.model_pack)
+
+            if bool(self.max_episodes) and self.ep >= self.max_episodes:
+                exit()
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="OBSERVE")
     parser.add_argument('-d', type=str, default='', help='Directory', required=True)
-    parser.add_argument('-max_steps', type=int, default=HYPER_PARAMS['max_episode_steps'], help='Max episode steps')
     parser.add_argument('-gpu', type=str, default='0', help='GPU #')
+    parser.add_argument('-max_steps', type=int, default=HYPER_PARAMS['max_episode_steps'], help='Max episode steps')
+    parser.add_argument('-max_episodes', type=int, default=HYPER_PARAMS['max_episodes'], help='Max episodes')
 
     Observe("OBSERVE", Env("observe"), parser.parse_args()).run()

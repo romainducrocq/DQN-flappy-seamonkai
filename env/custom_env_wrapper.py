@@ -6,6 +6,9 @@ import gym
 from gym import spaces
 import numpy as np
 
+import os
+from csv import DictWriter
+
 
 class CustomEnvWrapper(gym.Env):
     metadata = {'render.modes': ['human']}
@@ -90,12 +93,18 @@ class CustomEnvWrapper(gym.Env):
     def _info(self):
         info = {
             "l": self.steps,
-            "r": self.total_reward,
-            # """CHANGE INFO HERE""" ###################################################################################
-            "time": round(self.seamonkey.get_time(), 2),
-            "score": self.seamonkey.score,
-            ############################################################################################################
+            "r": self.total_reward
         }
+
+        if not self.mode["train"]:
+
+            # """CHANGE INFO HERE""" ###################################################################################
+            info["time"] = round(self.seamonkey.get_time(), 2)
+            info["score"] = self.seamonkey.score
+            ############################################################################################################
+
+            info["TimeLimit.truncated"] = False
+
         return info
 
     def reset(self):
@@ -140,3 +149,21 @@ class CustomEnvWrapper(gym.Env):
 
     def render(self, mode='human'):
         pass
+
+    @staticmethod
+    def ep_info_log_csv(info, ep, log_dir):
+        print()
+        print("Episode :", ep)
+        [print(k, ":", info[k]) for k in info]
+
+        log_path = "./logs/test/" + log_dir + ".csv"
+
+        file_exists = os.path.isfile(log_path)
+
+        with open(log_path, 'a') as f:
+            headers = [k for k in info]
+            csv_writer = DictWriter(f, delimiter=',', lineterminator='\n', fieldnames=headers)
+            if not file_exists:
+                csv_writer.writeheader()
+            csv_writer.writerow(info)
+            f.close()
