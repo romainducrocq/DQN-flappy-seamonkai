@@ -103,8 +103,6 @@ class CustomEnvWrapper(gym.Env):
             info["score"] = self.seamonkey.score
             ############################################################################################################
 
-            info["TimeLimit.truncated"] = False
-
         return info
 
     def reset(self):
@@ -151,19 +149,17 @@ class CustomEnvWrapper(gym.Env):
         pass
 
     @staticmethod
-    def ep_info_log_csv(info, ep, log_dir):
-        print()
-        print("Episode :", ep)
-        [print(k, ":", info[k]) for k in info]
+    def log_info_csv(info, done, log, log_step, log_path):
+        if log and (done or (log_step > 0 and info["l"] % log_step == 0)):
+            if "TimeLimit.truncated" not in info:
+                info["TimeLimit.truncated"] = False
+            info["done"] = done
 
-        log_path = "./logs/test/" + log_dir + ".csv"
+            file_exists = os.path.isfile(log_path + ".csv")
 
-        file_exists = os.path.isfile(log_path)
-
-        with open(log_path, 'a') as f:
-            headers = [k for k in info]
-            csv_writer = DictWriter(f, delimiter=',', lineterminator='\n', fieldnames=headers)
-            if not file_exists:
-                csv_writer.writeheader()
-            csv_writer.writerow(info)
-            f.close()
+            with open(log_path + ".csv", 'a') as f:
+                csv_writer = DictWriter(f, delimiter=',', lineterminator='\n', fieldnames=[k for k in info])
+                if not file_exists:
+                    csv_writer.writeheader()
+                csv_writer.writerow(info)
+                f.close()
