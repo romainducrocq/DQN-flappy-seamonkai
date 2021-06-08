@@ -35,7 +35,7 @@ class CustomEnvWrapper(gym.Env):
         }
         ################################################################################################################
 
-        # """CHANGE ACTION AND OBSERVATION SPACES HERE""" ##############################################################
+        # """CHANGE ACTION AND OBSERVATION SPACE SIZES HERE""" #########################################################
         action_space_n = len(self.seamonkey.actions)
         observation_space_n = self.seamonkey.n_sonars + 1
         ################################################################################################################
