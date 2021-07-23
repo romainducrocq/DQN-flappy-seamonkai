@@ -1,5 +1,5 @@
 # """CHANGE CUSTOM ENV IMPORT HERE""" ##################################################################################
-from .custom_env import Pipes, SeaMonkey, RES
+from .custom_env import CustomEnv
 ########################################################################################################################
 
 import gym
@@ -23,47 +23,31 @@ class CustomEnvWrapper(gym.Env):
         self.total_reward = 0.
 
         # """CHANGE ENV CONSTRUCT HERE""" ##############################################################################
-        self.seamonkey = SeaMonkey()
-        self.pipes = Pipes()
-        ################################################################################################################
-
-        # """CHANGE FEATURE SCALING HERE""" ############################################################################
-        self.lim_features = {
-            "sonar_distance_x": (0., RES[0] + (self.pipes.pipes[0].w // 2)),
-            "sonar_distance_y": (0., abs(self.seamonkey.y_lim[0]) + abs(self.pipes.pipes[0].y_lim[1])),
-            "rel_h": (0., 1.)
-        }
+        self.custom_env = CustomEnv()
         ################################################################################################################
 
         # """CHANGE ACTION AND OBSERVATION SPACE SIZES HERE""" #########################################################
-        action_space_n = len(self.seamonkey.actions)
-        observation_space_n = self.seamonkey.n_sonars + 1
+        action_space_n = self.custom_env.action_space_n
+        observation_space_n = self.custom_env.observation_space_n
         ################################################################################################################
 
-        if "reward" not in self.lim_features:
-            self.lim_features["reward"] = (0., 1.)
-
         self.action_space = spaces.Discrete(action_space_n)
-        self.observation_space = spaces.Box(low=0., high=1., shape=(observation_space_n,), dtype=np.float32)
+        self.observation_space = spaces.Box(
+            low=0., high=1., shape=(observation_space_n,) if type(observation_space_n) is int else observation_space_n,
+            dtype=np.float32
+        )
 
         self.log_info_buffer = []
 
-    def scale(self, x, feature):
-        return (x - self.lim_features[feature][0]) / (self.lim_features[feature][1] - self.lim_features[feature][0])
+    @property
+    def get_env(self):
+        return self.custom_env
 
     def _obs(self):
         obs = []
 
         # """CHANGE OBSERVATION HERE""" ################################################################################
-        x, y = self.pipes.get_next_pipe.end_x_y
-        self.seamonkey.sonars(x, y)
-        self.seamonkey.relative_height(y)
-
-        obs += [
-            self.scale(self.seamonkey.sonar_distances[0], "sonar_distance_x"),
-            self.scale(self.seamonkey.sonar_distances[1], "sonar_distance_y"),
-            self.scale(self.seamonkey.rel_h, "rel_h")
-        ]
+        obs += self.custom_env.obs()
         ################################################################################################################
 
         return np.array(obs, dtype=np.float32)
@@ -72,14 +56,9 @@ class CustomEnvWrapper(gym.Env):
         rew = 0.
 
         # """CHANGE REWARD HERE""" #####################################################################################
-        rew += pow(1 - (self.seamonkey.sonar_distances[1] / self.lim_features["sonar_distance_y"][1]), 2) / 10
-
-        if self.pipes.passed_pipe(self.seamonkey.back_x()):
-            self.seamonkey.reward()
-            rew = 1
+        rew += self.custom_env.rew()
         ################################################################################################################
 
-        rew = self.scale(rew, "reward")
         self.total_reward += rew
         return rew
 
@@ -87,7 +66,7 @@ class CustomEnvWrapper(gym.Env):
         done = False
 
         # """CHANGE DONE HERE""" #######################################################################################
-        if self.seamonkey.is_collision(self.pipes.get_next_pipe.points()):
+        if self.custom_env.done():
             done = True
         ################################################################################################################
 
@@ -102,8 +81,7 @@ class CustomEnvWrapper(gym.Env):
         if not self.mode["train"]:
 
             # """CHANGE INFO HERE""" ###################################################################################
-            info["time"] = round(self.seamonkey.get_time(), 2)
-            info["score"] = self.seamonkey.score
+            info.update(self.custom_env.info())
             ############################################################################################################
 
         return info
@@ -113,8 +91,7 @@ class CustomEnvWrapper(gym.Env):
         self.total_reward = 0.
 
         # """CHANGE RESET HERE""" ######################################################################################
-        self.seamonkey = SeaMonkey(lim_features=self.lim_features)
-        self.pipes = Pipes()
+        self.custom_env.reset()
         ################################################################################################################
 
         if not self.mode["train"]:
@@ -124,11 +101,7 @@ class CustomEnvWrapper(gym.Env):
 
     def step(self, action):
         # """CHANGE STEP HERE""" #######################################################################################
-        self.seamonkey.move(action)
-        self.pipes.add_pipe()
-        self.pipes.move_pipes()
-        self.pipes.remove_pipe()
-        self.pipes.next_pipe(self.seamonkey.back_x())
+        self.custom_env.step(action)
         ################################################################################################################
 
         if not self.mode["train"]:
@@ -140,12 +113,12 @@ class CustomEnvWrapper(gym.Env):
 
     def reset_render(self):
         # """CHANGE RESET RENDER HERE""" ###############################################################################
-        pass
+        self.custom_env.reset_render()
         ################################################################################################################
 
     def step_render(self):
         # """CHANGE STEP RENDER HERE""" ################################################################################
-        self.seamonkey.rotate_theta()
+        self.custom_env.step_render()
         ################################################################################################################
 
     def render(self, mode='human'):
