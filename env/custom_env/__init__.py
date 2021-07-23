@@ -1,6 +1,7 @@
 # """CHANGE CUSTOM ENV PACKAGE NAMESPACE HERE""" #######################################################################
-from .dqn_env import DqnEnv as CustomEnv
+from .pipe import Pipes
+from .seamonkey import SeaMonkey
 from .utils import RES, FLOOR_Y
 
-__all__ = ['CustomEnv', 'RES', 'FLOOR_Y']
+__all__ = ['Pipes', 'SeaMonkey', 'RES', 'FLOOR_Y']
 ########################################################################################################################
