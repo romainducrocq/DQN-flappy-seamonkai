@@ -91,9 +91,9 @@ class PygletView(pyglet.window.Window if PYGLET else object):
         play_action = 0
 
         # """CHANGE GET PLAY ACTION HERE""" ############################################################################
-        noop = self.env.get_env.seamonkey.actions['NOOP']
+        noop = self.env.get_env().seamonkey.actions['NOOP']
         action_keys = {
-            pyglet.window.key.UP: self.env.get_env.seamonkey.actions['JUMP']
+            pyglet.window.key.UP: self.env.get_env().seamonkey.actions['JUMP']
         }
 
         play_action += noop if self.key not in action_keys else action_keys[self.key]
@@ -109,10 +109,10 @@ class PygletView(pyglet.window.Window if PYGLET else object):
         # """CHANGE VIEW LOOP HERE""" ##################################################################################
         self.background_sprite.draw()
 
-        self.seamonkey_sprite.update(x=self.env.get_env.seamonkey.x, y=self.env.get_env.seamonkey.y, scale_x=1, scale_y=1, rotation=math.degrees(self.env.get_env.seamonkey.theta))
+        self.seamonkey_sprite.update(x=self.env.get_env().seamonkey.x, y=self.env.get_env().seamonkey.y, scale_x=1, scale_y=1, rotation=math.degrees(self.env.get_env().seamonkey.theta))
         self.seamonkey_sprite.draw()
 
-        for pipe in self.env.get_env.pipes.pipes:
+        for pipe in self.env.get_env().pipes.pipes:
             self.pipe_body_sprite.update(x=pipe.x, y=pipe.y - ((pipe.gap // 2) + 2 * RES[0]), scale_x=1, scale_y=1, rotation=0)
             self.pipe_body_sprite.draw()
 
@@ -132,7 +132,7 @@ class PygletView(pyglet.window.Window if PYGLET else object):
             self.ai_view_timer = time.time()
         if self.ai_view:
             PygletView.draw_vertices(
-                self.env.get_env.seamonkey.sonar_vertices,
+                self.env.get_env().seamonkey.sonar_vertices,
                 self.debug_colors[0]
             )
 
@@ -144,24 +144,24 @@ class PygletView(pyglet.window.Window if PYGLET else object):
             )
 
             PygletView.draw_vertices(
-                self.env.get_env.seamonkey.vertices() +
-                self.env.get_env.seamonkey.vertex_theta(),
+                self.env.get_env().seamonkey.vertices() +
+                self.env.get_env().seamonkey.vertex_theta(),
                 self.debug_colors[0]
             )
 
-            for e, pipe in enumerate(self.env.get_env.pipes.pipes):
+            for e, pipe in enumerate(self.env.get_env().pipes.pipes):
                 PygletView.draw_vertices(
                     pipe.vertices_up(),
-                    self.debug_colors[int(e == self.env.get_env.pipes.next_pipe_i)]
+                    self.debug_colors[int(e == self.env.get_env().pipes.next_pipe_i)]
                 )
 
                 PygletView.draw_vertices(
                     pipe.vertices_down(),
-                    self.debug_colors[int(e == self.env.get_env.pipes.next_pipe_i)]
+                    self.debug_colors[int(e == self.env.get_env().pipes.next_pipe_i)]
                 )
 
-        PygletView.draw_label_top_left("Time: " + str(round(self.env.get_env.seamonkey.get_time(), 2)), -RES[0], RES[1], y_offset=1)
-        PygletView.draw_label_top_left("Score: " + str(self.env.get_env.seamonkey.score), -RES[0], RES[1], y_offset=2)
+        PygletView.draw_label_top_left("Time: " + str(round(self.env.get_env().seamonkey.get_time(), 2)), -RES[0], RES[1], y_offset=1)
+        PygletView.draw_label_top_left("Score: " + str(self.env.get_env().seamonkey.score), -RES[0], RES[1], y_offset=2)
         ################################################################################################################
 
     def on_resize(self, width, height):
