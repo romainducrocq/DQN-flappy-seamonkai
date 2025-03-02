@@ -1,17 +1,13 @@
 #!/usr/bin/bash
 
-function run () {
-
-python3 observe.py -d ./save/PerDuelingDoubleDQNAgent_lr0.001_model.pack
-
-}
-
-cd ..
+cd ../
 
 source venv/bin/activate
-
-run
-
+if [ -z "${1}" ]; then
+    python3 observe.py -d ./save/PerDuelingDoubleDQNAgent_lr0.001_model.pack
+else
+    python3 observe.py "${@}"
+fi
 deactivate
 
 exit
