@@ -27,7 +27,8 @@ mkdir -v venv/
 Python-3.7.12/python -m venv venv/
 source venv/bin/activate
 export TMPDIR='/var/tmp'
-pip3 install six numpy 'pyglet==1.5.0' gym torch tensorboard 'msgpack==1.0.2' wheel --no-cache-dir
+pip3 install six numpy 'pyglet==1.5.0' gym torch tensorboard 'msgpack==1.0.2' \
+    wheel --no-cache-dir
 deactivate
 
 exit

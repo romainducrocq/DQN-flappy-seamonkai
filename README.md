@@ -2,17 +2,6 @@ Implemented from my DQN framework: https://github.com/romainducrocq/DQN-framewor
 
 ****
 
-### flappy-seamonkai
-
-The boosted seamonkai flappying around.  
-
-1. Train: `python3 train.py -algo PerDuelingDoubleDQNAgent -max_total_steps 9000000`
-2. Observe: `python3 observe.py -d ./save/PerDuelingDoubleDQNAgent_lr0.001_model.pack`
-3. Visualize: `tensorboard --logdir ./logs/train/`
-4. Play: `python3 play.py`
-
-****
-
 ### Build and Run
 
 `cd bin/`
@@ -46,7 +35,8 @@ mkdir -v venv/
 Python-3.7.12/python -m venv venv/
 source venv/bin/activate
 export TMPDIR='/var/tmp'
-pip3 install six numpy 'pyglet==1.5.0' gym torch tensorboard 'msgpack==1.0.2' wheel --no-cache-dir
+pip3 install six numpy 'pyglet==1.5.0' gym torch tensorboard 'msgpack==1.0.2' \
+    wheel --no-cache-dir
 deactivate
 ```
   
