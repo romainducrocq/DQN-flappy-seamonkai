@@ -1,6 +1,6 @@
-### flappy-seamonkai
+### DQN-FlappyBird
 
-The boosted seamonkai flappying around.  
+A flappy bird clone powered by AI, swimming around.  
 
 Implemented from my DQN framework: https://github.com/romainducrocq/DQN-frameworQ  
 
