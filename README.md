@@ -1,4 +1,4 @@
-### DQN-FlappyBird
+## DQN - Flappy Bird
 
 A flappy bird clone powered by AI, swimming around.  
 
