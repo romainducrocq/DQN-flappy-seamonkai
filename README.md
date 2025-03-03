@@ -1,4 +1,8 @@
-Implemented from my DQN framework: https://github.com/romainducrocq/DQN-frameworQ
+### flappy-seamonkai
+
+The boosted seamonkai flappying around.  
+
+Implemented from my DQN framework: https://github.com/romainducrocq/DQN-frameworQ  
 
 ****
 
